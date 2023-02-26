@@ -1,0 +1,131 @@
+#include<iostream>
+#include<algorithm>
+#include<cstdlib>
+using namespace std;
+
+int bubble_sort_comparisons(int* arr, int n)
+{
+    int comparisons = 0;
+    int i, j;
+    for (i = 0; i < n - 1; i++)
+        // Last i elements are already in place  
+        for (j = 0; j < n - i - 1; j++)
+        {
+            comparisons++;
+            if (arr[j] > arr[j + 1])
+                swap(arr[j], arr[j + 1]);
+        }
+    return comparisons;
+}
+
+int insertion_sort_comparisons(int* arr, int n)
+{
+    int comparisons=0;
+    int i, key, j;
+    for (i = 1; i < n; i++)
+    {
+        key = arr[i];
+        j = i - 1;
+        
+        if (!(j >= 0 && arr[j] > key))
+            comparisons++;
+        while (j >= 0 && arr[j] > key)
+        {
+            comparisons++;
+            arr[j + 1] = arr[j];
+            j = j - 1;
+        }
+        arr[j + 1] = key;
+    }
+    return comparisons;
+}
+
+int* generate_K_inversions(int k, int n)
+{
+    int* arr = new int[n];
+    //srand(time(0));
+    for (int i = 0; i < n; i++)
+    {
+        arr[i] = i;
+    }
+
+
+    for (int i = 0; i < n - 1; i++)
+    {
+        if (k != 0)
+        {
+            swap(arr[0], arr[i + 1]);
+        }
+
+    }
+
+
+    return arr;
+}
+
+
+void make_worst(int *arr, int n)
+{
+    sort(arr, arr + n,greater<int>());
+    //return arr;
+}
+void make_best(int *arr, int n)
+{
+    sort(arr, arr+n);
+    //return arr;
+}
+
+void test1(int n)
+{
+    if (n > 10)
+        return;
+    else
+    {
+        int* arr = new int[n];
+        srand(time(0));
+        for (int i = 0; i < n; i++)
+        {
+            arr[i] = rand() % 20;
+        }
+        cout << n << "  ";
+        make_best(arr, n);
+        cout << bubble_sort_comparisons(arr, n)<<"  ";
+        make_worst(arr,n);
+        cout << bubble_sort_comparisons(arr, n) << "  ";
+        make_best(arr, n);
+        cout << insertion_sort_comparisons(arr, n) << "  ";
+        make_worst(arr, n);
+        cout << insertion_sort_comparisons(arr, n) << "\n";
+        return test1(n + 1);
+    }
+}
+
+
+void test2()
+{
+    cout << "n    Bubble sort    Insertion sort";
+    int size = 11;
+    int n;
+    int** array = new int* [size];
+    //int* arr
+
+    for (int i = 0; i < size; i++)
+    {
+        n = i + 5;
+        array[i] = generate_K_inversions(n, int (n / 4));
+        
+    }
+    for (int i = 0; i < size; i++)
+    {
+        cout << i+5 << "   " << bubble_sort_comparisons(array[i], i+5) << "\n";
+
+    }
+    
+}
+
+void main()
+{
+
+    test2();
+
+}
