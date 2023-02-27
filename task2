@@ -40,7 +40,7 @@ int insertion_sort_comparisons(int* arr, int n)
     return comparisons;
 }
 
-int* generate_K_inversions(int k, int n)
+int* generate_K_inversions(int n, int k)
 {
     int* arr = new int[n];
     //srand(time(0));
@@ -104,7 +104,7 @@ void test1(int n)
 
 void test2()
 {
-    cout << "n    Bubble sort    Insertion sort";
+    cout << "n    Bubble sort    Insertion sort\n";
     int size = 11;
     int n;
     int** array = new int* [size];
@@ -113,12 +113,15 @@ void test2()
     for (int i = 0; i < size; i++)
     {
         n = i + 5;
+        array[i] = new int[n];
         array[i] = generate_K_inversions(n, int (n / 4));
         
     }
+
+
     for (int i = 0; i < size; i++)
     {
-        cout << i+5 << "   " << bubble_sort_comparisons(array[i], i+5) << "   " <<insertion_sort_comparisons(array[i],i+5) << "\n";
+        cout << i+5 << "     " << bubble_sort_comparisons(array[i], i+5) << "               " <<insertion_sort_comparisons(array[i],i+5) << "\n";
 
     }
     
@@ -127,8 +130,8 @@ void test2()
 void main()
 {
 
-    test1(1);
+   test1(1);
     cout << endl; cout << endl; cout << endl;
-   // test2();
+    test2();
 
 }
